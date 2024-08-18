@@ -37,7 +37,7 @@ object Application extends HttpServer {
     router.add[entry.rest.finatra.controller.unsafe.AuthenticationController]
     // // Authorized Access
     router.add[AuthorizationFilter, AuthenticationController]
-    router.add[AuthorizationFilter, AddItemController]
+//    router.add[AuthorizationFilter, AddItemController]
   }
 
 }

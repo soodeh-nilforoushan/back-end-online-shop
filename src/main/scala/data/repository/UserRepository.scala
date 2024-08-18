@@ -38,7 +38,7 @@ class UserRepository extends UserCallback with DatabaseModule {
   override def addUser(username: String, password:String, name: String, email: String, role: User.Role): Future[Long] = Future {
     NamedDB(onlineShop) localTx { implicit session =>
       sql"""
-        INSERT INTO items(userID,username,password, name, email, role)
+        INSERT INTO items(username,password, name, email, role)
            |values ($username ,$password,$name, $email, $role)
            |""".updateAndReturnGeneratedKey()
     }

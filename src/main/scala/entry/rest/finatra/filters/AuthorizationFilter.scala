@@ -6,6 +6,9 @@ import com.twitter.finagle.http.{Request, Response}
 import com.twitter.util.Future
 import contract.service.user.AuthorizeService
 import domain.user.Session
+import entry.rest.finatra.util.FutureUtil.ToTwitterFuture
+import modules.DatabaseModule.executionContext
+
 
 class AuthorizationFilter @Inject()(authorizeService: AuthorizeService) extends SimpleFilter[Request, Response] {
 

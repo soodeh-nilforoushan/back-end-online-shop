@@ -1,6 +1,5 @@
 package modules
 
-import com.sun.corba.se.impl.orbutil.CorbaResourceUtil.getString
 import com.zaxxer.hikari.HikariDataSource
 import scalikejdbc.{ConnectionPool, DataSourceConnectionPool}
 
@@ -22,9 +21,9 @@ object DatabaseModule {
   def init(name: String): String = {
     val ds = new HikariDataSource()
     ds.setPoolName(name)
-    ds.setJdbcUrl("jdbc:postgresql://192.168.98.125:5432/onlineshop")
-    ds.setUsername("onlineShop")
-    ds.setPassword("onlineShop")
+    ds.setJdbcUrl("jdbc:postgresql://192.168.98.125:5432/sn_online_shop")
+    ds.setUsername("soodeh")
+    ds.setPassword("soodeh")
     ds.setDriverClassName("org.postgresql.Driver")
     ds.setMinimumIdle(1)
     ds.setMaximumPoolSize(2)
@@ -35,7 +34,7 @@ object DatabaseModule {
     name
   }
 
-  val onlineShop: String = init("onlineShop")
+  val onlineShop: String = init("sn_online_Shop")
 
   def close(): Unit = {
     dataSources.foreach(_.close())
