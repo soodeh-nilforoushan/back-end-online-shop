@@ -1,4 +1,4 @@
-package repository.user
+package data.repository
 
 import com.google.inject.Singleton
 import contract.callback.user.SessionCallback

@@ -1,0 +1,11 @@
+# IDE
+.idea
+
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+
+
+# Scala
+.bsp
+target
