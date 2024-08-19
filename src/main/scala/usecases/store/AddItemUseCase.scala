@@ -11,7 +11,8 @@ import contract.callback.user.UserPermissionCallback
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class AddItemUseCase @Inject()(itemCallback: ItemCallback, userPermissionCallback: UserPermissionCallback) extends AddItemService {
+class AddItemUseCase @Inject()(itemCallback: ItemCallback, userPermissionCallback: UserPermissionCallback,
+                               sessionCallback: SessionCallback) extends AddItemService {
 
 
   override def call(request: AddItemService.Request)(implicit ec: ExecutionContext): Future[Item] = for {

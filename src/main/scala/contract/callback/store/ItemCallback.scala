@@ -16,8 +16,7 @@ abstract class ItemCallback {
                     price: Option[Double] = None,
                     description: Option[String]= None): Future[Unit]
 
-  def remove(itemID: Long): Future[Option[Unit]]
-  def removeByName(itemName: String) : Future[Option[Unit]]
+  def removeByName(itemName: String) : Future[Unit]
   def getAll :Future[Option[Item]]
 
 }

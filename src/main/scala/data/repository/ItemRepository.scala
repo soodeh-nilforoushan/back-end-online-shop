@@ -26,8 +26,8 @@ class ItemRepository extends ItemCallback with DatabaseModule {
     NamedDB(onlineShop) localTx { implicit session =>
       sql"""
         INSERT INTO items(name,stock, price, description)
-           |values ($name,$stock, $price, $description)
-           |""".updateAndReturnGeneratedKey()
+           values ($name,$stock, $price, $description)
+           """.updateAndReturnGeneratedKey()
     }
   }
 
@@ -43,38 +43,42 @@ class ItemRepository extends ItemCallback with DatabaseModule {
               stock=${stock}
               price=${price}
               description=${description}
-
            """.update()
     }
   }
-
-    override def remove(id: Long): Future[Option[Unit]] = Future {
-      NamedDB(onlineShop) localTx { implicit session =>
+  //
+    override def getAll: Future[Option[Item]] = Future {
+      NamedDB(onlineShop) readOnly  { implicit session =>
         sql"""
-             DELETE FROM items
-             WHERE id = ${id}
-           """.update()
+             SELECT * FROM items
+             """.map(ItemFactory.item).single()
       }
     }
-  //
-  //  override def getAll: Future[Option[Item]] = Future {
-  //    NamedDB(onlineShop) localTx { implicit session =>
-  //      sql"""
-  //           SELECT * FROM items
-  //           """.map(ItemFactory.item).single()
-  //    }
-  //  }
 
-  override def removeByName(itemName: String): Future[Option[Unit]] = ???
+  override def removeByName(itemName: String): Future[Unit] = Future{
+    NamedDB(onlineShop) localTx(implicit session =>
+      sql"""
+          DELETE FROM items
+          WHERE name = ${itemName}
+      """.update())
+  }
 
-  override def getByName(name: String): Future[Option[Item]] = ???
-
+//  override def getByName(name: String): Future[Option[Item]] = ???
+  override def getByName(name: String): Future[Option[Item]] = Future {
+    NamedDB(onlineShop) readOnly { implicit session =>
+      sql"""
+        SELECT *
+        FROM items
+        WHERE name = $name
+      """.map(ItemFactory.item).single()
+    }
+  }
 
   //  override def addItem(name: String, stock: Long, price: Double, description: String): Future[Long] = ???
 
   //  override def update(name: String, stock: Option[Long], price: Option[Double], description: Option[String]): Future[Unit] = ???
 
-  override def getAll: Future[Option[Item]] = ???
+//  override def getAll: Future[Option[Item]] = ???
 
 //  override def remove(itemID: Long): Future[Option[Unit]] = ???
 }
