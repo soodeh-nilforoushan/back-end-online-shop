@@ -35,11 +35,5 @@ class SignInUseCase @Inject()(sessionCallback: SessionCallback, userCallback: Us
       Future failed new Exception(s"Username or password is not correct!") // Show the same error to hide the auth procedure and existence of username
     }
   } yield session
-
-//  // Method to retrieve a session by its key
-//  def getSession(key: String): Option[Session] = sessionMap.get(key)
-//
-//  // Method to remove a session by its key
-//  def removeSession(key: String): Option[Session] = sessionMap.remove(key)
 }
 

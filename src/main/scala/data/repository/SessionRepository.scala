@@ -28,5 +28,7 @@ class SessionRepository extends SessionCallback with SimpleInMemoryModule[Sessio
     removeFromMemory(_.key == key)
   }
 
+
+
 }
 

@@ -73,12 +73,4 @@ class ItemRepository extends ItemCallback with DatabaseModule {
       """.map(ItemFactory.item).single()
     }
   }
-
-  //  override def addItem(name: String, stock: Long, price: Double, description: String): Future[Long] = ???
-
-  //  override def update(name: String, stock: Option[Long], price: Option[Double], description: Option[String]): Future[Unit] = ???
-
-//  override def getAll: Future[Option[Item]] = ???
-
-//  override def remove(itemID: Long): Future[Option[Unit]] = ???
 }
