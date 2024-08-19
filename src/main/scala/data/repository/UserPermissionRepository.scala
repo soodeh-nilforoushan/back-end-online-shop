@@ -5,6 +5,7 @@ import data.adapter.{UserFactory, UserPermissionFactory}
 import domain.user.UserPermission
 import modules.DatabaseModule
 import modules.DatabaseModule.onlineShop
+
 import scalikejdbc.{NamedDB, scalikejdbcSQLInterpolationImplicitDef}
 
 import scala.concurrent.Future
@@ -26,7 +27,7 @@ class UserPermissionRepository extends UserPermissionCallback with DatabaseModul
       val permissionIDsQL = ql"$permissionIDs"
       NamedDB(onlineShop) localTx {
         implicit session =>
-          sql"""I
+          sql"""
                INSERT INTO user_permission(user_id, permission)
                (
                SELECT permission, $userID

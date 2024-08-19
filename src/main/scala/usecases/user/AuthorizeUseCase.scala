@@ -3,7 +3,6 @@ package usecases.user
 import com.google.inject.{Inject, Singleton}
 import contract.callback.user.SessionCallback
 import contract.service.user.AuthorizeService
-import modules.ConfigModule
 import util.AuthUtils
 
 import scala.concurrent.{ExecutionContext, Future}

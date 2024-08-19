@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class SignUpUseCase @Inject()(userCallback: UserCallback, userPermissionCallback: UserPermissionCallback) extends SignUpService {
 
-  protected override def call(request: SignUpService.Request)(implicit ec: ExecutionContext): Future[User] = {
+  override def call(request: SignUpService.Request)(implicit ec: ExecutionContext): Future[User] = {
     // Persist hashed password
     val hashedPassword = AuthUtils hashPassword request.password
 
@@ -31,9 +31,8 @@ class SignUpUseCase @Inject()(userCallback: UserCallback, userPermissionCallback
         case User.Role.CUSTOMER => userPermissionCallback.addBatch(userID, Vector(UserPermission.Permission.ADD_To_BASKET,
           UserPermission.Permission.REMOVE_FROM_BASKET, UserPermission.Permission.UPDATE_BASKET, UserPermission.Permission.GET_ALL_BASKET))
       }
-
-        createdUser <- userCallback.get(userID)
-    } yield createdUser getOrElse (throw ClassNotFoundException)
+      createdUser <- userCallback.get(userID)
+    } yield createdUser getOrElse (throw new Exception("not found"))
   }
 
 

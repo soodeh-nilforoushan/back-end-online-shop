@@ -2,27 +2,23 @@ package usecases.store
 
 import com.google.inject.{Inject, Singleton}
 import contract.callback.store.ItemCallback
-import contract.callback.user.{SessionCallback, UserCallback}
+import contract.callback.user.{SessionCallback, UserCallback, UserPermissionCallback}
 import contract.service.store.{AddItemService, UpdateItemService}
-import domain.entities.Permission
+import domain.user.UserPermission
 import domain.store.Item
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class UpdateItemUseCase @Inject()(itemCallback: ItemCallback, userCallback: UserCallback, permissionCallback: PermissionCallback, sessionCallback: SessionCallback) extends UpdateItemService {
+class UpdateItemUseCase @Inject()(itemCallback: ItemCallback, userCallback: UserCallback, userPermissionCallback: UserPermissionCallback,
+                                  sessionCallback: SessionCallback) extends UpdateItemService {
 
 
-  override def call(request: UpdateItemService.Request)(implicit ec: ExecutionContext): Future[Item] = for {
-    // Step 1: Check if the user is logged in and has a valid session
-    session <- sessionCallback.get(request.userID)
-    _ = session getOrElse {
-      Future.failed(new Exception("Invalid session key"))
-    }
+  override def call(request: UpdateItemService.Request)(implicit ec: ExecutionContext): Future[Unit] = for {
 
 
     // Step 2: Check if the user has the permission to add a product
-    hasPermission <- permissionCallback.get(request.userID, Permission.ADD_ITEM)
+    hasPermission <- userPermissionCallback.get(request.userID, UserPermission.Permission.ADD_ITEM)
     _ = hasPermission getOrElse {
       Future.failed(new Exception("User does not have permission to add products"))
     }
@@ -38,5 +34,5 @@ class UpdateItemUseCase @Inject()(itemCallback: ItemCallback, userCallback: User
 //    item <-itemCallback.get(itemId)
 
 
-  } yield itemId
+  } yield ()
 }

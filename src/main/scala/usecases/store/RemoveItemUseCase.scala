@@ -2,9 +2,9 @@ package usecases.store
 
 import com.google.inject.{Inject, Singleton}
 import contract.callback.store.ItemCallback
-import contract.callback.user.{SessionCallback, UserCallback}
+import contract.callback.user.{SessionCallback, UserCallback, UserPermissionCallback}
 import contract.service.store.{AddItemService, RemoveItemService}
-import domain.entities.Permission
+import domain.user.UserPermission
 import domain.store.Item
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -12,19 +12,17 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class RemoveItemUseCase @Inject()(itemCallback: ItemCallback,
                                   userCallback: UserCallback,
-                                  permissionCallback: PermissionCallback,
+                                  userPermissionCallback: UserPermissionCallback,
                                   sessionCallback: SessionCallback)
   extends RemoveItemService {
 
   override def call(request: RemoveItemService.Request)(implicit ec: ExecutionContext): Future[Unit] = for {
     // Step 1: Check if the user is logged in and has a valid session
-    session <- sessionCallback.get(request.userID)
-    _ = session getOrElse {
-      Future.failed(new Exception("Invalid session key"))
-    }
+
+
 
     // Step 2: Check if the user has the permission to remove an item
-    hasPermission <- permissionCallback.get(request.userID, Permission.REMOVE_ITEM)
+    hasPermission <- userPermissionCallback.get(request.userID, UserPermission.Permission.REMOVE_ITEM)
     _ = hasPermission getOrElse {
       Future.failed(new Exception("User does not have permission to remove items"))
     }
