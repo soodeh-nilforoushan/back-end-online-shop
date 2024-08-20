@@ -1,3 +1,3 @@
-package entry.rest.finatra.adapter.user.store.api
+package entry.rest.finatra.adapter.store.api
 
-case class RemoveItemRequestDTO()
+case class RemoveItemRequestDTO(itemName: String)

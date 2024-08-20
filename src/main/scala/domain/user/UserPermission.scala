@@ -10,7 +10,6 @@ object UserPermission {
 
     final val ADD_ITEM: Permission = 1
     final val ADD_To_BASKET: Permission = 2
-//    final val GET_ALL_ITEM: Permission = 3
     final val GET_ALL_BASKET: Permission = 4
     final val GET_ITEM: Permission = 5
     final val REMOVE_FROM_BASKET: Permission = 6

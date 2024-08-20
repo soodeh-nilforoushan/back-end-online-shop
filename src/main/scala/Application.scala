@@ -7,7 +7,7 @@ import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters._
 import com.twitter.finatra.http.routing.HttpRouter
 import entry.rest.finatra.CustomScalaObjectMapperModule
-import entry.rest.finatra.controller.{AddItemController, AuthenticationController}
+import entry.rest.finatra.controller.{StoreController, AuthenticationController}
 import entry.rest.finatra.filters.AuthorizationFilter
 import modules.{CallbackModule, ServiceModule}
 
@@ -21,8 +21,9 @@ import com.twitter.finatra.http.routing.HttpRouter
 
 object Application extends HttpServer {
 
+  override def jacksonModule: Module= CustomScalaObjectMapperModule
 
-  override protected def defaultHttpPort: String = s":${"8080"}"
+  override protected def defaultHttpPort: String = ":8080"
 
   override protected def modules: Seq[Module] = Seq(CallbackModule, ServiceModule)
 
@@ -37,7 +38,7 @@ object Application extends HttpServer {
     router.add[entry.rest.finatra.controller.unsafe.AuthenticationController]
     // // Authorized Access
     router.add[AuthorizationFilter, AuthenticationController]
-//    router.add[AuthorizationFilter, AddItemController]
+    router.add[AuthorizationFilter, StoreController]
   }
 
 }

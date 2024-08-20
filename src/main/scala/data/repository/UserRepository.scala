@@ -6,7 +6,7 @@ import domain.user.User
 import modules.DatabaseModule
 import modules.DatabaseModule.onlineShop
 import scalikejdbc.{NamedDB, scalikejdbcSQLInterpolationImplicitDef}
-import sun.security.util.Password
+
 
 import scala.concurrent.Future
 

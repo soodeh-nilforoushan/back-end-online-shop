@@ -2,23 +2,18 @@ package usecases.store
 
 import com.google.inject.{Inject, Singleton}
 import contract.callback.store.ItemCallback
-import contract.callback.user.{SessionCallback, UserCallback, UserPermissionCallback}
-import contract.service.store.{AddItemService, RemoveItemService}
+import contract.callback.user.{ UserPermissionCallback}
+import contract.service.store.RemoveItemService
 import domain.user.UserPermission
-import domain.store.Item
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class RemoveItemUseCase @Inject()(itemCallback: ItemCallback,
-                                  userCallback: UserCallback,
-                                  userPermissionCallback: UserPermissionCallback,
-                                  sessionCallback: SessionCallback)
+                                  userPermissionCallback: UserPermissionCallback)
   extends RemoveItemService {
 
   override def call(request: RemoveItemService.Request)(implicit ec: ExecutionContext): Future[Unit] = for {
-    // Step 1: Check if the user is logged in and has a valid session
-
 
 
     // Step 2: Check if the user has the permission to remove an item
@@ -35,9 +30,8 @@ class RemoveItemUseCase @Inject()(itemCallback: ItemCallback,
     }
 
     // Step 4: Remove the item from the database
-    removed <- itemCallback.removeByName(request.itemName)
-    _ =  removed getOrElse {
-      Future.failed(new Exception(s"Failed to remove the item with name ${request.itemName}"))
-    }
+    _ <- itemCallback.removeByName(request.itemName)
+
+
   } yield ()
 }

@@ -12,12 +12,12 @@ import scala.concurrent.Future
 
 class UserPermissionRepository extends UserPermissionCallback with DatabaseModule {
 
-  override def get(userID: Long, permissionID: Long): Future[Option[UserPermission]] = Future {
+  override def get(userID: Long, permission: Long): Future[Option[UserPermission]] = Future {
     NamedDB(onlineShop) readOnly { implicit session =>
       sql"""
         SELECT *
         FROM user_permission
-        WHERE user_id = $userID
+        WHERE user_id = $userID and permission = $permission
       """.map(UserPermissionFactory.userPermission).single()
     }
   }
