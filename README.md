@@ -7,10 +7,12 @@ User Features:
 Users can log in, log out, and sign up.
 Users can add items to their baskets and remove items from them.
 Users can finalize their purchases.
+
 Admin Features:
 
 Admins have different permissions and can manage the data repository.
 Admins can remove items, update product information, or add/delete products as needed.
+
 Example of Implemented APIs:
 /api/v1/authentication/users
 /api/v1/users/me/permissions
