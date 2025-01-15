@@ -1,6 +1,6 @@
 # online-shop
 
-This is a back-end project where I designed and implemented RESTful APIs within a clean architecture framework. The project includes two main entities: User and Store.
+This is an end-to-end back-end project where I designed and implemented RESTful APIs within a clean architecture framework. The project includes two main entities: User and Store.
 
 User Features:
 
